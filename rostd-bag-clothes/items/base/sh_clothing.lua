@@ -8,6 +8,7 @@ ITEM.width = 2
 ITEM.height = 2
 ITEM.invWidth = 2
 ITEM.invHeight = 2
+ITEM.civilProtectionItem = false
 
 if (CLIENT) then
 	function ITEM:PaintOver(item, w, h)
@@ -20,6 +21,8 @@ end
 
 ITEM.functions.Wear = {
 	OnRun = function(itemTable)
+        print(itemTable.bodygroup)
+        print(itemTable.bodygroupValue)
 		local client = itemTable.player
 		local groups = client:GetCharacter():GetData("groups",nil)
 		if(groups[itemTable.bodygroup] != 0 and groups[itemTable.bodygroup] != nil) then client:Notify("You are already wearing something in that slot!") return false end
@@ -31,7 +34,7 @@ ITEM.functions.Wear = {
 		return false
 	end,
 	OnCanRun = function(itemTable)
-		return !itemTable.entity and !itemTable:GetData("wearing", false) and !itemTable:GetOwner():IsCombine()
+		return !itemTable.entity and !itemTable:GetData("wearing", false) and (itemTable:GetOwner():IsCombine() == itemTable.civilProtectionItem)
 	end
 }
 
