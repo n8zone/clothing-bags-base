@@ -1,10 +1,13 @@
-ITEM.name = "Clothing Base"
-ITEM.description = "A big suitcase of clothes."
+ITEM.base = "base_bags"
+ITEM.name = "Clothing Bag"
+ITEM.description = "A big suitcase of clothes with pockets."
 ITEM.model = Model("models/weapons/w_suitcase_passenger.mdl")
 ITEM.bodygroup = 1
 ITEM.bodygroupValue = 7
 ITEM.width = 2
 ITEM.height = 2
+ITEM.invWidth = 2
+ITEM.invHeight = 2
 ITEM.civilProtectionItem = false
 
 if (CLIENT) then
@@ -21,8 +24,8 @@ ITEM.functions.Wear = {
         print(itemTable.bodygroup)
         print(itemTable.bodygroupValue)
 		local client = itemTable.player
-		local groups = client:GetCharacter():GetData("groups",{ })
-		if(groups[itemTable.bodygroup] != nil and groups[itemTable.bodygroup] != 0) then client:Notify("You are already wearing something in that slot!") return false end
+		local groups = client:GetCharacter():GetData("groups",nil)
+		if(groups[itemTable.bodygroup] != 0 and groups[itemTable.bodygroup] != nil) then client:Notify("You are already wearing something in that slot!") return false end
 		groups[itemTable.bodygroup] = itemTable.bodygroupValue
 		client:SetBodygroup(itemTable.bodygroup, itemTable.bodygroupValue)
 		client:GetCharacter():SetData("groups", groups)
