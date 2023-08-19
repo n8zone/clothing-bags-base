@@ -24,7 +24,7 @@ ITEM.functions.Wear = {
         print(itemTable.bodygroup)
         print(itemTable.bodygroupValue)
 		local client = itemTable.player
-		local groups = client:GetCharacter():GetData("groups",nil)
+		local groups = client:GetCharacter():GetData("groups", {  })
 		if(groups[itemTable.bodygroup] != 0 and groups[itemTable.bodygroup] != nil) then client:Notify("You are already wearing something in that slot!") return false end
 		groups[itemTable.bodygroup] = itemTable.bodygroupValue
 		client:SetBodygroup(itemTable.bodygroup, itemTable.bodygroupValue)
