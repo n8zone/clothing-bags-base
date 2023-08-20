@@ -21,8 +21,6 @@ end
 
 ITEM.functions.Wear = {
 	OnRun = function(itemTable)
-        print(itemTable.bodygroup)
-        print(itemTable.bodygroupValue)
 		local client = itemTable.player
 		local groups = client:GetCharacter():GetData("groups", {  })
 		if(groups[itemTable.bodygroup] != 0 and groups[itemTable.bodygroup] != nil) then client:Notify("You are already wearing something in that slot!") return false end
@@ -34,7 +32,14 @@ ITEM.functions.Wear = {
 		return false
 	end,
 	OnCanRun = function(itemTable)
-		return !itemTable.entity and !itemTable:GetData("wearing", false) and (itemTable:GetOwner():IsCombine() == itemTable.civilProtectionItem)
+		if (!isfunction(itemTable:GetOwner().IsCombine)) then
+			-- if the isCombine function does not exist, then bypass check
+			CanFactionWear = true
+		else
+			local CanFactionWear = itemTable:GetOwner():IsCombine() == itemTable.civilProtectionItem
+		end
+
+		return !itemTable.entity and !itemTable:GetData("wearing", false) and (CanFactionWear)
 	end
 }
 
