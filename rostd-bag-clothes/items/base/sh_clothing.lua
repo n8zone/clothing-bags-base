@@ -31,7 +31,7 @@ ITEM.functions.Wear = {
 		return false
 	end,
 	OnCanRun = function(itemTable)
-		return !itemTable.entity and !itemTable:GetData("wearing", false) and (itemTable:GetOwner():IsCombine() == itemTable.civilProtectionItem)
+		return !itemTable.entity and !itemTable:GetData("wearing", false) and (!itemTable.civilProtectionItem or itemTable:GetOwner():IsCombine())
 	end
 }
 
