@@ -59,3 +59,14 @@ ITEM.functions.Remove = {
 		return !itemTable.entity and itemTable:GetData("wearing", false)
 	end
 }
+
+
+ITEM:Hook("drop", function(itemTable)
+	local client = itemTable.player
+
+	client:SetBodygroup(itemTable.bodygroup, 0)
+	local groups = client:GetCharacter():GetData("groups", nil)
+	groups[itemTable.bodygroup] = 0
+	client:GetCharacter():SetData("groups", groups)
+	itemTable:SetData("wearing", false)
+end)
